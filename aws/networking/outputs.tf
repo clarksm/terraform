@@ -1,7 +1,7 @@
 #----networking/outputs.tf
 
 output "public_subnets" {
-	value = "${aws_subnet.tf_public_subnet.*.id"
+	value = "${aws_subnet.tf_public_subnet.*.id}"
 }
 
 output "public_sg" {
@@ -9,5 +9,5 @@ output "public_sg" {
 }
 
 output "subnet_ips" {
-	value = "${aws_subnet.tf_public_subnets.*.cidr_block}"
+	value = "${aws_subnet.tf_public_subnet.*.cidr_block}"
 }
