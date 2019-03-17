@@ -12,7 +12,7 @@ module "storage" {
 module "networking" {
 	source = "./networking"
 	vpc_cidr = "${var.vpc_cidr}"
-	public_cides = "${var.public_cidrs}"
+	public_cidrs = "${var.public_cidrs}"
 	accessip = "${var.accessip}"
 }
 
