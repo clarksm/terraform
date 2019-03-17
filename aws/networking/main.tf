@@ -35,7 +35,7 @@ resource "aws_route_table" "tf_public_rt" {
 }
 
 resource "aws_default_route_table" "tf_private_rt" {
-	aws_default_route_table_id = "${aws_vpc.tf_vpc.aws_default_route_table.id"
+	aws_default_route_table_id = "${aws_vpc.tf_vpc.aws_default_route_table.id}"
 
 	tags {
 		Name = "tf_private"
