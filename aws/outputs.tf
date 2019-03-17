@@ -23,7 +23,7 @@ output "Public Security Group" {
 #---compute outputs
 
 output "Public Instance IDs" {
-	value ="${module.compute.server_id"
+	value ="${module.compute.server_id}"
 }
 
 output "Public Instance IPs" {
