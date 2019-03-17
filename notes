@@ -23,3 +23,5 @@ sudo apt-get install docker-ce
 ##workspaces - allow the creation of TF from the same folder but in different 'envrionments'
 terraform workspace new <spacename>
 terraform workspace select <spacename>
+
+##store tfstate in s3 bucket
