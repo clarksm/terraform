@@ -2,15 +2,11 @@
 
 data "aws_ami" "server_ami" {
 	most_recent = true
-
-	filter {
-		name 	= "owner-alias"
-		values 	= ["amazon"]
-	}
+	owners 		= "amazon"
 
 	filter {
 		name 	= "name"
-		vales 	= ["amz-ami-hvm*-x86_64-gp2"]
+		values 	= ["amzn-ami-hvm*-x86_64-gp2"]
 	}
 }
 
@@ -31,12 +27,12 @@ data "template_file" "user-init" {
 }
 
 resource "aws_instance" "tf_server" {
-	count = "${var.instance_count}"
-	instane_type = "${var.instance_type}"
-	ami = "${data.aws_ami.server_ami.id}"
+	count 			= "${var.instance_count}"
+	instance_type 	= "${var.instance_type}"
+	ami 			= "${data.aws_ami.server_ami.id}"
 
 	tags = {
-		Name = "tf_server-${count.index +1}"
+		Name 		= "tf_server-${count.index +1}"
 	}
 
 	key_name = "${aws_key_pair.tf_auth.id}"
