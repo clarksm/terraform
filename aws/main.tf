@@ -10,6 +10,13 @@ provider "aws" {
 #	}
 #}
 
+#local backend (with variable)
+#terraform {
+#	backend "local"{
+#		path = "${var.relative_state_path}"
+#	}
+#}
+
 #deploy storage resources
 module "storage" {
 	source = "./storage"
