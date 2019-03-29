@@ -2,7 +2,7 @@
 
 data "aws_ami" "server_ami" {
 	most_recent = true
-	owners 		= "amazon"
+	owners 		= ["amazon"]
 
 	filter {
 		name 	= "name"
