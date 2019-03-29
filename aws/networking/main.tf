@@ -27,27 +27,21 @@ resource "aws_route_table" "tf_public_rt" {
 	route {
 		cidr_block = "0.0.0.0/0"
 		gateway_id = "${aws_internet_gateway.tf_internet_gateway.id}"
-<<<<<<< HEAD
 	}
 		
 	tags {
 		Name = "tf_public"
-=======
 		
 	}
 
 	tags {
 			Name = "tf_public"
->>>>>>> fba3f6f13e9aa841e44b5d86424c454476a3cf29
 	}
 }
 
 resource "aws_default_route_table" "tf_private_rt" {
-<<<<<<< HEAD
   default_route_table_id = "${aws_vpc.tf_vpc.default_route_table_id}"
-=======
 	aws_default_route_table_id = "${aws_vpc.tf_vpc.aws_default_route_table.id}"
->>>>>>> fba3f6f13e9aa841e44b5d86424c454476a3cf29
 
   tags {
     Name = "tf_private"
