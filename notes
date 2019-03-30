@@ -25,3 +25,6 @@ terraform workspace new <spacename>
 terraform workspace select <spacename>
 
 ##store tfstate in s3 bucket
+
+##using jenkins for deploy
+need aws configured, need jenkins to have key associated (ssh-keygen)
