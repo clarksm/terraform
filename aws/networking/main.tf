@@ -9,7 +9,8 @@ resource "aws_vpc" "tf_vpc" {
 	enable_dns_support 		= true
 
 	tags {
-		Name = "tf_vpc"
+		Name 		= "tf_vpc"
+		Environment = "Dev"
 	}
 }
 
@@ -85,6 +86,100 @@ resource "aws_security_group" "tf_public_sg" {
 		to_port 	= 80
 		protocol 	= "tcp"
 		cidr_blocks = ["${var.accessip}"]
+	}
+
+	egress {
+		from_port	= 0
+		to_port 	= 0
+		protocol 	= "-1"
+		cidr_blocks = ["0.0.0.0/0"]
+	}
+}
+
+#---------START NEW 'PUBLIC' NETWORK
+resource "aws_vpc" "tf_prd_vpc" {
+	cidr_block 				= "${var.prd_vpc_cidr}"
+	enable_dns_hostnames 	= true
+	enable_dns_support 		= true
+
+	tags {
+		Name 		= "tf_vpc"
+		Environment = "Prod"
+	}
+}
+
+resource "aws_internet_gateway" "tf_prd_internet_gateway"{
+	vpc_id = "${aws_vpc.tf_prd_vpc.id}"
+
+	tags {
+		Name 		= "tf-igw"
+		Environment = "Prod"
+	}
+}
+
+resource "aws_route_table" "tf_prd_public_rt" {
+	vpc_id = "${aws_vpc.tf_prd_vpc.id}"
+
+	route {
+		cidr_block = "0.0.0.0/0"
+		gateway_id = "${aws_internet_gateway.tf_prd_internet_gateway.id}"
+	}
+		
+	tags {
+		Name 		= "tf_public"
+		Environment = "Prod"
+		
+	}
+}
+
+resource "aws_default_route_table" "tf_prd_private_rt" {
+  default_route_table_id = "${aws_vpc.tf_prod_vpc.default_route_table_id}"
+
+  tags {
+    Name 		= "tf_private"
+    Environment = "Prod"
+  }
+}
+
+#deploy two public subnets
+resource "aws_subnet" "tf_prd_public_subnet" {
+	count 		= 2
+	vpc_id 		= "${aws_vpc.tf_prd_vpc.id}"
+	cidr_block 	= "${var.public_prd_cidrs[count.index]}"
+	map_public_ip_on_launch = true
+	availability_zone = "${data.aws_availability_zones.available.names[count.index]}"
+
+	tags {
+		Name 		= "tf_public_${count.index + 1}"
+		Environment = "Prod"
+	}
+}
+
+resource "aws_route_table_association" "tf_prd_public_assoc" {
+	count = "${aws_subnet.tf_prd_public_subnet.count}"
+	subnet_id = "${aws_subnet.tf__prd_public_subnet.*.id[count.index]}"
+	route_table_id = "${aws_route_table.tf_prd_public_rt.id}"
+}
+
+resource "aws_security_group" "tf_prd_public_sg" {
+	name = "tf_prd_public_sg"
+	description = "Used for public access in production"
+	vpc_id = "${aws_vpc.tf_prd_vpc.id}"
+
+	#SSH
+	ingress {
+		from_port 	= 22
+		to_port 	= 22
+		protocol 	= "tcp"
+		cidr_blocks = ["${var.prd_accessip}"]
+	}
+
+	#HTTP
+	ingress {
+		from_port 	= 80
+		to_port 	= 80
+		protocol 	= "tcp"
+		cidr_blocks = ["${var.prd_accessip}"]
 	}
 
 	egress {
