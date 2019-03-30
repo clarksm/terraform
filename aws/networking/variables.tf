@@ -7,3 +7,11 @@ variable "public_cidrs" {
 }
 
 variable "accessip" {}
+
+variable "prd_vpc_cidr" {}
+
+variable "public_prd_cidrs" {
+	type = "list"
+}
+
+variable "prd_accessip" {}
