@@ -33,6 +33,7 @@ resource "aws_instance" "tf_server" {
 
 	tags = {
 		Name 		= "tf_server-${count.index +1}"
+		Envrionment	= "Dev"
 	}
 
 	key_name = "${aws_key_pair.tf_auth.id}"
