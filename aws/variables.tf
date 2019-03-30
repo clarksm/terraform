@@ -13,7 +13,7 @@ variable "prd_vpc_cidr" {}
 variable "public_prd_cidrs" {
 	type = "list"
 }
-variable "prd_accessip"
+variable "prd_accessip" {}
 
 
 #----compute variables
