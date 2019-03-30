@@ -1,5 +1,12 @@
 pipeline {
  agent any
+
+ parameters {
+    choice(
+        choices: ['apply' , 'destroy'],
+        description: 'Deploy/change or destroy TF assets',
+        name: 'REQUESTED_ACTION')
+}
  
  stages {
  stage('checkout') {
@@ -8,27 +15,36 @@ pipeline {
  
  }
  }
- stage('Set Terraform path') {
+ 
+ stage('Infrastructure Apply') {
+ 
+ when {
+    // Only say hello if a "greeting" is requested
+    expression { params.REQUESTED_ACTION == 'apply' }
+}
  steps {
- script {
- def tfHome = tool name: 'Terraform'
- env.PATH = "${tfHome}:${env.PATH}"
- }
- sh 'terraform — version'
- 
- 
- }
- }
- 
- stage('Provision infrastructure') {
- 
- steps {
- dir('dev')
+ dir('aws')
  {
  sh 'terraform init'
  sh 'terraform plan -out=plan'
  // sh ‘terraform destroy -auto-approve’
  sh 'terraform apply plan'
+ }
+ 
+ 
+ }
+ }
+
+stage('Infrastructure Destroy') {
+ 
+ when {
+    // Only say hello if a "greeting" is requested
+    expression { params.REQUESTED_ACTION == 'destroy' }
+}
+ steps {
+ dir('aws')
+ {
+ sh 'terraform destroy -auto-approve'
  }
  
  
