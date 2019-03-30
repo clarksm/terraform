@@ -12,11 +12,6 @@ provider "aws" {
 #}
 
 #local backend (with variable)
-terraform {
-	backend "local"{
-		path = "${var.relative_state_path}"
-	}
-}
 #terraform {
 #	backend "local"{
 #		path = "${var.relative_state_path}"
