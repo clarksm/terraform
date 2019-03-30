@@ -1,3 +1,4 @@
+//conditional params test
 pipeline {
  agent any
 
@@ -19,7 +20,7 @@ pipeline {
  stage('Infrastructure Apply') {
  
  when {
-    // Only say hello if a "greeting" is requested
+    // Apply TF infrastructure
     expression { params.REQUESTED_ACTION == 'apply' }
 }
  steps {
@@ -27,7 +28,6 @@ pipeline {
  {
  sh 'terraform init'
  sh 'terraform plan -out=plan'
- // sh ‘terraform destroy -auto-approve’
  sh 'terraform apply plan'
  }
  
@@ -38,7 +38,7 @@ pipeline {
 stage('Infrastructure Destroy') {
  
  when {
-    // Only say hello if a "greeting" is requested
+    // Destroy TF infrastructure
     expression { params.REQUESTED_ACTION == 'destroy' }
 }
  steps {
