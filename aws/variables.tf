@@ -9,6 +9,12 @@ variable "public_cidrs" {
 	type = "list"
 }
 variable "accessip" {}
+variable "prd_vpc_cidr" {}
+variable "public_prd_cidrs" {
+	type = "list"
+}
+variable "prd_accessip"
+
 
 #----compute variables
 variable "key_name" {}
@@ -21,4 +27,5 @@ variable "instance_count" {
 	default = 1
 }
 
+#----backend variables
 variable "relative_state_path" {}
