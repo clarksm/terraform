@@ -133,7 +133,7 @@ resource "aws_route_table" "tf_prd_public_rt" {
 }
 
 resource "aws_default_route_table" "tf_prd_private_rt" {
-  default_route_table_id = "${aws_vpc.tf_prod_vpc.default_route_table_id}"
+  default_route_table_id = "${aws_vpc.tf_prd_vpc.default_route_table_id}"
 
   tags {
     Name 		= "tf_private"
@@ -157,7 +157,7 @@ resource "aws_subnet" "tf_prd_public_subnet" {
 
 resource "aws_route_table_association" "tf_prd_public_assoc" {
 	count = "${aws_subnet.tf_prd_public_subnet.count}"
-	subnet_id = "${aws_subnet.tf__prd_public_subnet.*.id[count.index]}"
+	subnet_id = "${aws_subnet.tf_prd_public_subnet.*.id[count.index]}"
 	route_table_id = "${aws_route_table.tf_prd_public_rt.id}"
 }
 
