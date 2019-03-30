@@ -2,6 +2,7 @@ provider "aws" {
 	region = "${var.aws_region}"
 }
 
+#s3 backend
 #terraform {
 #	backend "s3" {
 #		bucket 	= "la-terraform-course-state"
@@ -11,11 +12,17 @@ provider "aws" {
 #}
 
 #local backend (with variable)
+terraform {
+	backend "local"{
+		path = "${var.relative_state_path}"
+	}
+}
 #terraform {
 #	backend "local"{
 #		path = "${var.relative_state_path}"
 #	}
 #}
+
 
 #deploy storage resources
 module "storage" {
@@ -29,6 +36,9 @@ module "networking" {
 	vpc_cidr = "${var.vpc_cidr}"
 	public_cidrs = "${var.public_cidrs}"
 	accessip = "${var.accessip}"
+	prd_vpc_cidr = "${var.vpc_cidr}"
+	public_prd_cidrs = "${var.public_prd_cidrs}"
+	prd_accessip = "${var.prd_accessip}"
 }
 
 #Deploy compute resources
