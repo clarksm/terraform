@@ -29,6 +29,7 @@ pipeline {
  sh 'terraform init'
  sh 'terraform plan -out=plan'
  sh 'terraform apply plan'
+ sh 'aws ec2 describe-instances --filter "Name=instance-state-name,Values=running" --query "Reservations[].Instances[].[PublicIpAddress]" --output=text > ../../hosts/devhosts.txt'
  }
  
  
