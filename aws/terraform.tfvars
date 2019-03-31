@@ -12,9 +12,9 @@ public_key_path = "/var/lib/jenkins/.ssh/id_rsa.pub"
 server_instance_type = "t2.micro"
 instance_count 	= 2
 relative_state_path = "./terraform.tfstate"
-prd_vpc_cidr		= "10.777.0.0/16"
+prd_vpc_cidr		= "20.123.0.0/16"
 public_prd_cidrs	= [
-	"10.777.1.0/24",
-	"10.777.2.0/24"
+	"20.123.1.0/24",
+	"20.123.2.0/24"
 	]
 prd_accessip		= "0.0.0.0/0"
