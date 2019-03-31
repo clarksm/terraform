@@ -28,3 +28,6 @@ terraform workspace select <spacename>
 
 ##using jenkins for deploy
 need aws configured, need jenkins to have key associated (ssh-keygen)
+
+#Query for public ips of current instances 
+aws ec2 describe-instances --query "Reservations[].Instances[].[PublicIpAddress]" --output=text
