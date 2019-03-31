@@ -30,4 +30,4 @@ terraform workspace select <spacename>
 need aws configured, need jenkins to have key associated (ssh-keygen)
 
 #Query for public ips of current instances 
-aws ec2 describe-instances --filter "Name=tag:Envrionment,Values=dev" --query "Reservations[].Instances[].[PublicIpAddress]" --output=text
+aws ec2 describe-instances --filter "Name=tag:Environment,Values=dev" --query "Reservations[].Instances[].[PublicIpAddress]" --output=text
