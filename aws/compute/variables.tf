@@ -17,3 +17,15 @@ variable "security_group" {}
 variable "subnets" {
 	type = "list"
 }
+
+#-----production instance variables
+variable "prd_instance_count" {}
+
+variable "prd_instance_type" {}
+
+variable "prd_security_group" {}
+
+variable "prd_subnets" {
+	type = "list"
+}
+
