@@ -18,3 +18,5 @@ public_prd_cidrs	= [
 	"10.0.2.0/24"
 	]
 prd_accessip		= "0.0.0.0/0"
+prd_server_instance_type = "t2.micro"
+prd_instance_count = 1
