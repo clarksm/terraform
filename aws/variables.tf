@@ -27,5 +27,11 @@ variable "instance_count" {
 	default = 1
 }
 
+variable "prd_server_instance_type" {}
+
+variable "prd_instance_count" {
+	default = 1
+}
+
 #----backend variables
 variable "relative_state_path" {}
