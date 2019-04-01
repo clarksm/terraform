@@ -47,6 +47,12 @@ module "compute" {
 	subnets = "${module.networking.public_subnets}"
 	security_group = "${module.networking.public_sg}"
 	subnet_ips = "${module.networking.subnet_ips}"
+	#---prod resources
+	prd_instance_count = "${var.prd_instance_count}"
+	prd_instance_type = "${prd_instance_type}"
+	prd_subnets = "${module.networking.prd_public_subnets}"
+	prd_security_group = "${module.networking.prd_public_sg}"
+	prd_subnet_ips = "${module.networking.prd_subnet_ips}"
 
 	#name on the left should match the variable name in source dir and right should match root variable 
 }
