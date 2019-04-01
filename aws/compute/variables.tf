@@ -19,6 +19,9 @@ variable "subnets" {
 }
 
 #-----production instance variables
+variable "prd_subnet_ips" {
+	type = "list"
+}
 variable "prd_instance_count" {}
 
 variable "prd_instance_type" {}
