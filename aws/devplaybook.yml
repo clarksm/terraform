@@ -21,5 +21,5 @@
       service: name=httpd state=started enabled=yes
     - name: example copying file with owner and permissions
       copy:
-        src: /var/lib/jenkins/workspace/pipeline/devapp/index.html
+        src: /var/lib/jenkins/workspace/pipeline/aws/devapp/index.html
         dest: /var/www/html/index.html
