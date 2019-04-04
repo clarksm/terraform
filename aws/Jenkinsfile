@@ -54,6 +54,7 @@ stage('Infrastructure Configure') {
  steps {
  dir('aws')
  {
+ export ANSIBLE_HOST_KEY_CHECKING=False
  sh 'ansible-playbook -i ../../../hosts/devhosts.txt devplaybook.yml'
  sh 'ansible-playbook -i ../../../hosts/devhosts.txt devplaybook.yml'
  }
