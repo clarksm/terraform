@@ -29,8 +29,33 @@ pipeline {
  sh 'terraform init'
  sh 'terraform plan -out=plan'
  sh 'terraform apply plan'
- sh 'aws ec2 describe-instances --filter "Name=instance-state-name,Values=running,Name=tag:Environment,Values=Dev" --query "Reservations[].Instances[].[PublicIpAddress]" --output=text > ../../../hosts/devhosts.txt'
- sh 'aws ec2 describe-instances --filter "Name=instance-state-name,Values=running,Name=tag:Environment,Values=Prod" --query "Reservations[].Instances[].[PublicIpAddress]" --output=text > ../../../hosts/prodhosts.txt'
+ //create host files
+ sh 'echo "[dev]" > ../../../hosts/devhosts.txt'
+ sh 'echo "[prod]" > ../../../hosts/prodhosts.txt'
+ //populate instance ips by tag
+ sh 'aws ec2 describe-instances --query "Reservations[*].Instances[*].[PublicIpAddress]" --filters "Name=instance-state-name,Values=running,Name=tag:Environment,Values=Dev" --output=text > ../../../hosts/devstage.txt'
+ //filter out shutdown instances
+ sh 'grep -v "None" ../../../hosts/devstage.txt >> ../../../hosts/devhosts.txt'
+ sh 'aws ec2 describe-instances --query "Reservations[*].Instances[*].[PublicIpAddress]" --filters "Name=instance-state-name,Values=running,Name=tag:Environment,Values=Prod" --output=text > ../../../hosts/prodstage.txt'
+ sh 'grep -v "None" ../../../hosts/prodstage.txt >> ../../../hosts/prodhosts.txt'
+ //sh 'aws ec2 describe-instances --filter "Name=instance-state-name,Values=running,Name=tag:Environment,Values=Prod" --query "Reservations[].Instances[].[PublicIpAddress]" --output=text > ../../../hosts/prodhosts.txt'
+ }
+ 
+ 
+ }
+ }
+
+stage('Infrastructure Configure') {
+ 
+ when {
+    // Destroy TF infrastructure
+    expression { params.REQUESTED_ACTION == 'apply' }
+}
+ steps {
+ dir('aws')
+ {
+ sh 'ansible-playbook -i ../../../hosts/devhosts.txt devplaybook.yml'
+ sh 'ansible-playbook -i ../../../hosts/devhosts.txt devplaybook.yml'
  }
  
  
@@ -52,8 +77,6 @@ stage('Infrastructure Destroy') {
  
  }
  }
- 
- 
- 
+
  }
 }
