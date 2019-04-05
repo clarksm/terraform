@@ -31,3 +31,6 @@ need aws configured, need jenkins to have key associated (ssh-keygen)
 
 #Query for public ips of current instances 
 aws ec2 describe-instances --filter --filter "Name=instance-state-name,Values=running" --query "Reservations[].Instances[].[PublicIpAddress]" --output=text
+
+#jenkins
+https://stackoverflow.com/questions/49937743/install-jenkins-in-ubuntu-18-04-lts-failed-failed-to-start-lsb-start-jenkins-a?rq=1
