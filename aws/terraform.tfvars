@@ -19,4 +19,4 @@ public_prd_cidrs	= [
 	]
 prd_accessip		= "0.0.0.0/0"
 prd_server_instance_type = "t2.micro"
-prd_instance_count = 1
+prd_instance_count = 2
